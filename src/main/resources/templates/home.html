@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>Grupo Dasa - Relatório de Positivação</title>
+	<link rel="shortcut icon" th:href="@{images/ico-dasa.png}" />
+	
+	<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" /> 
+</head>
+
+<body>
+		<form method="POST">
+		<div class="container">
+			
+			<div class="col-md-offset-4 col-md-4" style="margin-top: 40px;">
+				<img class="img-responsive" src="images/logo_dasa.png" />
+			</div>
+			
+			<div id="loginbox" style="margin-top: 50px;"
+				class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+				<div class="panel panel-danger">
+					<div class="panel panel-heading">
+						<div class="panel-title text-center">Relatório de Positivação</div>
+					</div>
+	
+					<div style="padding-top: 30px" class="panel-body">
+	
+						<div style="display: none" id="login-alert"
+							class="alert alert-danger col-sm-12"></div>
+	
+						<form id="loginform" class="form-horizontal" role="form">
+	
+							<div style="margin-bottom: 25px" class="input-group">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span>
+									 <input id="data-inicial" type="date" required="required" class="form-control" name="dataInicio" placeholder="01/01/2017" />
+							</div>
+	
+							<div style="margin-bottom: 25px" class="input-group">
+								<span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span> 
+									<input id="data-final" type="date" required="required" class="form-control" name="dataFinal" placeholder="01/01/2017" />
+							</div>
+							
+							<div style="margin-bottom: 25px" class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-menu-down"></i></span>
+								<select id="marca" class="form-control" >
+									<option value="">Selecione o laboratório</option>
+									<option value="001">Delboni</option>
+									<option th:each="marca : ${laboratorioList}" th:value="${marca.codigoLaboratorio}" th:text="${marca.nomeLaboratorio}" ></option>
+								</select>
+								
+							</div>
+	
+	
+							<div style="margin-top: 10px" class="form-group">
+								<!-- Button -->
+								<div class="col-sm-12 controls">
+									<input id="botao-relatorio" type="submit" value="Gerar Relatório" class="btn btn-danger" />
+								</div>
+							</div>
+							
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/ajax-controller.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#img-loading").prop("hidden", true);
+			$("#msg-erro").prop("hidden", true);
+			$("#msg-sucesso").prop("hidden", true);
+		});
+	</script>
+	
+	<div class="col-md-offset-4 col-md-4" id="img-loading">
+		<img src="images/aguarde_carregando.gif" />
+	</div>
+	
+	<div class="col-md-offset-4 col-md-4" id="msg-erro">
+		<div class="alert alert-danger text-center" role="alert">Não foi possível gerar o relatório!</div>
+	</div>
+
+	<div class="col-md-offset-4 col-md-4" id="msg-sucesso">
+		<div class="alert alert-success text-center" role="alert">
+			<div>Relatório gerado com sucesso.</div> 
+			<div>Clique abaixo para fazer o download!</div>
+				<form action="/downloadFile" method="POST">
+					<br />
+					<div class="row">
+						<button type="submit" class="btn btn-success" onclick="ocultaMensagem()">
+							<span class="glyphicon glyphicon-download"></span>
+						 	Download
+						 </button>
+					</div>
+				</form> 
+		 </div>
+	</div>
+</body>
+</html>
