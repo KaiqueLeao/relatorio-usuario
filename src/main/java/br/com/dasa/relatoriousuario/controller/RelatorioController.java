@@ -2,10 +2,8 @@ package br.com.dasa.relatoriousuario.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +56,7 @@ public class RelatorioController {
 				serviceRelatorioNegociacao.gerarRelatorioPositivacao(relatorioPositivacao, request);
 				return new ResponseEntity<>("Arquivo gerado com sucesso.",HttpStatus.OK);
 			} catch (Exception e) {
-				logger.error("Erro gerarRelatorio: " + e.getMessage());
-				e.printStackTrace();
+				logger.error("Erro gerarRelatorio: " + e);
 				return new ResponseEntity<>("Erro ao gerar relatório.",HttpStatus.BAD_REQUEST);
 			}
 	}
